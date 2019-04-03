@@ -21,6 +21,16 @@ class ViewController: UITableViewController {
         }
         //pictures = pictures.sorted()
         pictures.sort() // sort() is definitely better
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sharedTapped))
+        
+    }
+    
+    @objc func sharedTapped() {
+        let text = "Check this amazing App out!"
+        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityViewController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,7 +44,8 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
+        // one of the ways to show new view controller - Imagine This with hidden navigation controller?
         if let detailViewController = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             detailViewController.selectedImage = pictures[indexPath.row]
             detailViewController.selectedImageIndex = indexPath.row + 1
